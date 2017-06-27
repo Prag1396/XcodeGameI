@@ -17,6 +17,7 @@
 		DB045F811F02F2BA00EFBBB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB045F7F1F02F2BA00EFBBB4 /* LaunchScreen.storyboard */; };
 		DB045F8C1F02F2BA00EFBBB4 /* FlappyBirdGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB045F8B1F02F2BA00EFBBB4 /* FlappyBirdGameTests.swift */; };
 		DB045F971F02F2BA00EFBBB4 /* FlappyBirdGameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB045F961F02F2BA00EFBBB4 /* FlappyBirdGameUITests.swift */; };
+		DB045FA51F031A4000EFBBB4 /* RandomNumberGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB045FA41F031A4000EFBBB4 /* RandomNumberGenerator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		DB045F921F02F2BA00EFBBB4 /* FlappyBirdGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlappyBirdGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB045F961F02F2BA00EFBBB4 /* FlappyBirdGameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlappyBirdGameUITests.swift; sourceTree = "<group>"; };
 		DB045F981F02F2BA00EFBBB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB045FA41F031A4000EFBBB4 /* RandomNumberGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumberGenerator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				DB045F721F02F2B900EFBBB4 /* GameScene.sks */,
 				DB045F741F02F2B900EFBBB4 /* Actions.sks */,
 				DB045F761F02F2BA00EFBBB4 /* GameScene.swift */,
+				DB045FA41F031A4000EFBBB4 /* RandomNumberGenerator.swift */,
 				DB045F781F02F2BA00EFBBB4 /* GameViewController.swift */,
 				DB045F7A1F02F2BA00EFBBB4 /* Main.storyboard */,
 				DB045F7D1F02F2BA00EFBBB4 /* Assets.xcassets */,
@@ -273,6 +276,7 @@
 				DB045F771F02F2BA00EFBBB4 /* GameScene.swift in Sources */,
 				DB045F791F02F2BA00EFBBB4 /* GameViewController.swift in Sources */,
 				DB045F711F02F2B900EFBBB4 /* AppDelegate.swift in Sources */,
+				DB045FA51F031A4000EFBBB4 /* RandomNumberGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
