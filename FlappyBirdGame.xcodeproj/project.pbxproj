@@ -19,6 +19,9 @@
 		DB045F971F02F2BA00EFBBB4 /* FlappyBirdGameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB045F961F02F2BA00EFBBB4 /* FlappyBirdGameUITests.swift */; };
 		DB045FA51F031A4000EFBBB4 /* RandomNumberGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB045FA41F031A4000EFBBB4 /* RandomNumberGenerator.swift */; };
 		DB045FA71F044B0000EFBBB4 /* 04B_19__.TTF in Resources */ = {isa = PBXBuildFile; fileRef = DB045FA61F044AFF00EFBBB4 /* 04B_19__.TTF */; };
+		DB045FAC1F057FCB00EFBBB4 /* collect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB045FA91F057FCB00EFBBB4 /* collect.mp3 */; };
+		DB045FAD1F057FCB00EFBBB4 /* Collision.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB045FAA1F057FCB00EFBBB4 /* Collision.mp3 */; };
+		DB045FB11F059A1500EFBBB4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB045FB01F059A1500EFBBB4 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +60,9 @@
 		DB045F981F02F2BA00EFBBB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB045FA41F031A4000EFBBB4 /* RandomNumberGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumberGenerator.swift; sourceTree = "<group>"; };
 		DB045FA61F044AFF00EFBBB4 /* 04B_19__.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = 04B_19__.TTF; sourceTree = "<group>"; };
+		DB045FA91F057FCB00EFBBB4 /* collect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = collect.mp3; sourceTree = "<group>"; };
+		DB045FAA1F057FCB00EFBBB4 /* Collision.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Collision.mp3; sourceTree = "<group>"; };
+		DB045FB01F059A1500EFBBB4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB045FB11F059A1500EFBBB4 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +98,7 @@
 				DB045F8A1F02F2BA00EFBBB4 /* FlappyBirdGameTests */,
 				DB045F951F02F2BA00EFBBB4 /* FlappyBirdGameUITests */,
 				DB045F6E1F02F2B900EFBBB4 /* Products */,
+				DB045FAF1F059A1500EFBBB4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -111,8 +119,9 @@
 				DB045F701F02F2B900EFBBB4 /* AppDelegate.swift */,
 				DB045F721F02F2B900EFBBB4 /* GameScene.sks */,
 				DB045F741F02F2B900EFBBB4 /* Actions.sks */,
-				DB045F761F02F2BA00EFBBB4 /* GameScene.swift */,
+				DB045FA81F057F5E00EFBBB4 /* Music */,
 				DB045FA41F031A4000EFBBB4 /* RandomNumberGenerator.swift */,
+				DB045F761F02F2BA00EFBBB4 /* GameScene.swift */,
 				DB045F781F02F2BA00EFBBB4 /* GameViewController.swift */,
 				DB045F7A1F02F2BA00EFBBB4 /* Main.storyboard */,
 				DB045F7D1F02F2BA00EFBBB4 /* Assets.xcassets */,
@@ -138,6 +147,23 @@
 				DB045F981F02F2BA00EFBBB4 /* Info.plist */,
 			);
 			path = FlappyBirdGameUITests;
+			sourceTree = "<group>";
+		};
+		DB045FA81F057F5E00EFBBB4 /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				DB045FA91F057FCB00EFBBB4 /* collect.mp3 */,
+				DB045FAA1F057FCB00EFBBB4 /* Collision.mp3 */,
+			);
+			name = Music;
+			sourceTree = "<group>";
+		};
+		DB045FAF1F059A1500EFBBB4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DB045FB01F059A1500EFBBB4 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,8 +278,10 @@
 				DB045FA71F044B0000EFBBB4 /* 04B_19__.TTF in Resources */,
 				DB045F731F02F2B900EFBBB4 /* GameScene.sks in Resources */,
 				DB045F7E1F02F2BA00EFBBB4 /* Assets.xcassets in Resources */,
+				DB045FAC1F057FCB00EFBBB4 /* collect.mp3 in Resources */,
 				DB045F811F02F2BA00EFBBB4 /* LaunchScreen.storyboard in Resources */,
 				DB045F751F02F2B900EFBBB4 /* Actions.sks in Resources */,
+				DB045FAD1F057FCB00EFBBB4 /* Collision.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
