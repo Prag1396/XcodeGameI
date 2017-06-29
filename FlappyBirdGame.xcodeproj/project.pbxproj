@@ -22,6 +22,7 @@
 		DB045FAC1F057FCB00EFBBB4 /* collect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB045FA91F057FCB00EFBBB4 /* collect.mp3 */; };
 		DB045FAD1F057FCB00EFBBB4 /* Collision.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB045FAA1F057FCB00EFBBB4 /* Collision.mp3 */; };
 		DB045FB11F059A1500EFBBB4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB045FB01F059A1500EFBBB4 /* AVFoundation.framework */; };
+		DB045FB31F05A3C600EFBBB4 /* jumpplayer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB045FB21F05A3C600EFBBB4 /* jumpplayer.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		DB045FA91F057FCB00EFBBB4 /* collect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = collect.mp3; sourceTree = "<group>"; };
 		DB045FAA1F057FCB00EFBBB4 /* Collision.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Collision.mp3; sourceTree = "<group>"; };
 		DB045FB01F059A1500EFBBB4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		DB045FB21F05A3C600EFBBB4 /* jumpplayer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jumpplayer.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				DB045FA91F057FCB00EFBBB4 /* collect.mp3 */,
+				DB045FB21F05A3C600EFBBB4 /* jumpplayer.mp3 */,
 				DB045FAA1F057FCB00EFBBB4 /* Collision.mp3 */,
 			);
 			name = Music;
@@ -279,6 +282,7 @@
 				DB045F731F02F2B900EFBBB4 /* GameScene.sks in Resources */,
 				DB045F7E1F02F2BA00EFBBB4 /* Assets.xcassets in Resources */,
 				DB045FAC1F057FCB00EFBBB4 /* collect.mp3 in Resources */,
+				DB045FB31F05A3C600EFBBB4 /* jumpplayer.mp3 in Resources */,
 				DB045F811F02F2BA00EFBBB4 /* LaunchScreen.storyboard in Resources */,
 				DB045F751F02F2B900EFBBB4 /* Actions.sks in Resources */,
 				DB045FAD1F057FCB00EFBBB4 /* Collision.mp3 in Resources */,

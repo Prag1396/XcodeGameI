@@ -24,6 +24,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var spinnyNode : SKShapeNode?
     
     var playSound = SKAction()
+    var playJumpSound = SKAction()
     var ground = SKSpriteNode()
     var ghost = SKSpriteNode()
     var wallPair = SKNode()
@@ -81,7 +82,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ghost = SKSpriteNode(imageNamed: "Ghost")
         ghost.size = CGSize(width: 60, height: 70)
         ghost.position = CGPoint(x: self.frame.width / 2 - ghost.frame.width, y: self.frame.height / 2)
-        ghost.physicsBody = SKPhysicsBody(circleOfRadius: ghost.frame.height/2)
+        ghost.physicsBody = SKPhysicsBody(circleOfRadius: ghost.size.width/2)
         ghost.physicsBody?.categoryBitMask = (PhysicsStruct.ghost)
         ghost.physicsBody?.collisionBitMask = (PhysicsStruct.ground | PhysicsStruct.wall)
         ghost.physicsBody?.contactTestBitMask = (PhysicsStruct.ground | PhysicsStruct.wall | PhysicsStruct.Score)
@@ -104,7 +105,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print(error)
         }
         playSound =  SKAction.playSoundFileNamed("collect", waitForCompletion: false)
-
+        playJumpSound = SKAction.playSoundFileNamed("jumpplayer", waitForCompletion: false)
         self.createScene()
         
     }
@@ -199,15 +200,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let movePipes = SKAction.moveBy(x: -distance - 50, y: 0, duration: TimeInterval(0.008 * distance))
             let removePipes = SKAction.removeFromParent()
             moveAndRemove = SKAction.sequence([movePipes ,removePipes])
+            self.run(playJumpSound)
             ghost.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-            ghost.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 70))
+            ghost.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 65))
             
         } else {
             
             if(died == false) {
                 
                 ghost.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                ghost.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 70))
+                ghost.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 65))
+                self.run(playJumpSound)
                 
             }
             
