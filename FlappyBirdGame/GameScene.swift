@@ -31,8 +31,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var moveAndRemove = SKAction()
     var gameStarted = Bool()
     var score = Int()
+    var highScore = Int()
     var died = Bool()
     var restartButton = SKSpriteNode()
+    var highScoreLabel = SKLabelNode()
     let scoreLabel = SKLabelNode()
     
     
@@ -96,6 +98,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
+        let highScoreDefult = UserDefaults.standard
+        if(highScoreDefult.value(forKey: "HighScore") != nil) {
+            highScore = highScoreDefult.value(forKey: "HighScore") as! Int
+            highScoreLabel.text = "HIGH SCORE: \(self.highScore)"
+        }
+        
         do {
             self.audioPlayerCollision = try AVAudioPlayer(contentsOf: URL.init(string: Bundle.main.path(forResource: "Collision", ofType: "mp3")!)!)
             self.audioPlayerCollision.prepareToPlay()
@@ -111,7 +119,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-    func createButton() {
+    func createButtonandLabels() {
         
         audioPlayerCollision.play()
         restartButton = SKSpriteNode(imageNamed: "RestartBtn")
@@ -122,6 +130,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(restartButton)
         
         restartButton.run(SKAction.scale(to: 1.0, duration: 0.3))
+        
+        highScoreLabel = SKLabelNode(fontNamed: "04b_19")
+        highScoreLabel.text = "HIGH SCORE: \(self.highScore)"
+        highScoreLabel.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2 + 80)
+        highScoreLabel.zPosition =  6
+        self.addChild(highScoreLabel)
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -135,6 +149,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             scoreLabel.text = "\(score)"
             firstBody.node?.removeFromParent()
             self.run(playSound)
+            
+            if(score > highScore) {
+                highScore = score
+            }
+            
+            let highScoreDefult = UserDefaults.standard
+            highScoreDefult.set(highScore, forKey: "HighScore")
+            highScoreDefult.synchronize()
         }
             
         else if(firstBody.categoryBitMask == PhysicsStruct.ghost && secondBody.categoryBitMask == PhysicsStruct.Score) {
@@ -142,6 +164,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             scoreLabel.text = "\(score)"
             secondBody.node?.removeFromParent()
             self.run(playSound)
+            
+            if(score > highScore) {
+                highScore = score
+            }
+            
+            let highScoreDefult = UserDefaults.standard
+            highScoreDefult.set(highScore, forKey: "HighScore")
+            highScoreDefult.synchronize()
         }
             
         else if(firstBody.categoryBitMask == PhysicsStruct.ghost && secondBody.categoryBitMask == PhysicsStruct.wall ||
@@ -156,7 +186,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }))
             if(died == false) {
                 died = true
-                createButton()
+                createButtonandLabels()
             }
         }
             
@@ -173,7 +203,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }))
             if(died == false) {
                 died = true
-                createButton()
+                createButtonandLabels()
             }
         }
         
