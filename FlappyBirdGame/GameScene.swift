@@ -97,7 +97,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Add an image of coin when the game is not started
         numberOfCoins = SKSpriteNode(imageNamed: "CoinIcon")
-        numberOfCoins.position = CGPoint(x: self.frame.width/2 + 105 , y: self.frame.height/2 + 293)
+        numberOfCoins.position = CGPoint(x: self.frame.width/2 , y: self.frame.height/2 - 150)
         numberOfCoins.size = CGSize(width: 50, height: 50)
         numberOfCoins.physicsBody = SKPhysicsBody(rectangleOf: numberOfCoins.size)
         numberOfCoins.physicsBody?.affectedByGravity = false
@@ -111,7 +111,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         numberofCoinsLabel.text = "\(numberOfCoinsCollected)"
         numberofCoinsLabel.fontName = "04b_19"
-        numberofCoinsLabel.position = CGPoint(x: self.frame.width/2 + 140, y: self.frame.height/2 + 280)
+        numberofCoinsLabel.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2 - 200)
         numberofCoinsLabel.zPosition = 6
         self.addChild(numberofCoinsLabel)
 
@@ -377,3 +377,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
 }
+
