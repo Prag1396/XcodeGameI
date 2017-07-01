@@ -32,11 +32,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameStarted = Bool()
     var score = Int()
     var highScore = Int()
+    var numberOfCoinsCollected = Int()
     var died = Bool()
     var restartButton = SKSpriteNode()
+    var numberOfCoins = SKSpriteNode()
     var highScoreLabel = SKLabelNode()
     let scoreLabel = SKLabelNode()
-    
+    let numberofCoinsLabel = SKLabelNode()
     
     func restartScene() {
         
@@ -51,7 +53,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createScene() {
         
         self.physicsWorld.contactDelegate = self
-        
         for i in 0..<2 {
             let background = SKSpriteNode(imageNamed: "Background")
             background.anchorPoint = CGPoint.zero
@@ -93,15 +94,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ghost.zPosition = 2
         self.addChild(ghost)
         
+        
+        //Add an image of coin when the game is not started
+        numberOfCoins = SKSpriteNode(imageNamed: "CoinIcon")
+        numberOfCoins.position = CGPoint(x: self.frame.width/2 + 105 , y: self.frame.height/2 + 293)
+        numberOfCoins.size = CGSize(width: 50, height: 50)
+        numberOfCoins.physicsBody = SKPhysicsBody(rectangleOf: numberOfCoins.size)
+        numberOfCoins.physicsBody?.affectedByGravity = false
+        numberOfCoins.physicsBody?.isDynamic = false
+        numberOfCoins.physicsBody?.categoryBitMask = PhysicsStruct.Score
+        numberOfCoins.physicsBody?.collisionBitMask = 0
+        numberOfCoins.physicsBody?.contactTestBitMask = 0
+        numberOfCoins.zPosition = 6
+        numberOfCoins.setScale(0.8)
+        self.addChild(numberOfCoins)
+        
+        numberofCoinsLabel.text = "\(numberOfCoinsCollected)"
+        numberofCoinsLabel.fontName = "04b_19"
+        numberofCoinsLabel.position = CGPoint(x: self.frame.width/2 + 140, y: self.frame.height/2 + 280)
+        numberofCoinsLabel.zPosition = 6
+        self.addChild(numberofCoinsLabel)
 
     }
     
     override func didMove(to view: SKView) {
         
         let highScoreDefult = UserDefaults.standard
+        let getCoinsCollected = UserDefaults.standard
+        
         if(highScoreDefult.value(forKey: "HighScore") != nil) {
             highScore = highScoreDefult.value(forKey: "HighScore") as! Int
             highScoreLabel.text = "HIGH SCORE: \(self.highScore)"
+        }
+        
+        if(getCoinsCollected.value(forKey: "numberOfCoinsCollected") != nil) {
+            numberOfCoinsCollected = getCoinsCollected.value(forKey: "numberOfCoinsCollected") as! Int
+            numberofCoinsLabel.text = "\(numberOfCoinsCollected)"
         }
         
         do {
@@ -114,6 +142,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         playSound =  SKAction.playSoundFileNamed("collect", waitForCompletion: false)
         playJumpSound = SKAction.playSoundFileNamed("jumpplayer", waitForCompletion: false)
+        
+
         self.createScene()
         
     }
@@ -121,6 +151,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func createButtonandLabels() {
         
+        numberofCoinsLabel.text = "\(numberOfCoinsCollected)"
+        numberofCoinsLabel.isHidden = false
+        numberOfCoins.isHidden = false
         audioPlayerCollision.play()
         restartButton = SKSpriteNode(imageNamed: "RestartBtn")
         restartButton.size = CGSize(width: 200, height: 100)
@@ -132,11 +165,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         restartButton.run(SKAction.scale(to: 1.0, duration: 0.3))
         
         highScoreLabel = SKLabelNode(fontNamed: "04b_19")
+        highScoreLabel.fontColor = UIColor.black
         highScoreLabel.text = "HIGH SCORE: \(self.highScore)"
-        highScoreLabel.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2 + 80)
+        highScoreLabel.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2 + 90)
         highScoreLabel.zPosition =  6
         self.addChild(highScoreLabel)
     }
+    
+    
     
     func didBegin(_ contact: SKPhysicsContact) {
         //Test which objects collided
@@ -146,6 +182,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if(firstBody.categoryBitMask == PhysicsStruct.Score && secondBody.categoryBitMask == PhysicsStruct.ghost) {
  
             self.score += 1
+            numberOfCoinsCollected += 1
             scoreLabel.text = "\(score)"
             firstBody.node?.removeFromParent()
             self.run(playSound)
@@ -157,10 +194,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let highScoreDefult = UserDefaults.standard
             highScoreDefult.set(highScore, forKey: "HighScore")
             highScoreDefult.synchronize()
+            
+            let getCoinsCollected = UserDefaults.standard
+            getCoinsCollected.set(numberOfCoinsCollected, forKey: "numberOfCoinsCollected")
+            getCoinsCollected.synchronize()
         }
             
         else if(firstBody.categoryBitMask == PhysicsStruct.ghost && secondBody.categoryBitMask == PhysicsStruct.Score) {
+            
             self.score += 1
+            numberOfCoinsCollected += 1
             scoreLabel.text = "\(score)"
             secondBody.node?.removeFromParent()
             self.run(playSound)
@@ -172,6 +215,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let highScoreDefult = UserDefaults.standard
             highScoreDefult.set(highScore, forKey: "HighScore")
             highScoreDefult.synchronize()
+            
+            let getCoinsCollected = UserDefaults.standard
+            getCoinsCollected.set(numberOfCoinsCollected, forKey: "numberOfCoinsCollected")
+            getCoinsCollected.synchronize()
         }
             
         else if(firstBody.categoryBitMask == PhysicsStruct.ghost && secondBody.categoryBitMask == PhysicsStruct.wall ||
@@ -213,6 +260,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (gameStarted == false) {
             
             gameStarted = true
+            numberOfCoins.isHidden = true
+            numberofCoinsLabel.isHidden = true
             ghost.physicsBody?.affectedByGravity = true
             
             let spawn = SKAction.run( {
