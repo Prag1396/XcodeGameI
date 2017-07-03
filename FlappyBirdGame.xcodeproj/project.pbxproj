@@ -25,6 +25,8 @@
 		DB045FB31F05A3C600EFBBB4 /* jumpplayer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB045FB21F05A3C600EFBBB4 /* jumpplayer.mp3 */; };
 		DB045FB51F09CDE300EFBBB4 /* UpgradesScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DB045FB41F09CDE300EFBBB4 /* UpgradesScene.sks */; };
 		DB045FB71F09CEBC00EFBBB4 /* Upgrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB045FB61F09CEBC00EFBBB4 /* Upgrade.swift */; };
+		DBC2D7151F0AC21B005FC537 /* UpgradesII.sks in Resources */ = {isa = PBXBuildFile; fileRef = DBC2D7141F0AC21B005FC537 /* UpgradesII.sks */; };
+		DBC2D7171F0AC262005FC537 /* UpgradesSceneTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC2D7161F0AC262005FC537 /* UpgradesSceneTwo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +71,8 @@
 		DB045FB21F05A3C600EFBBB4 /* jumpplayer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jumpplayer.mp3; sourceTree = "<group>"; };
 		DB045FB41F09CDE300EFBBB4 /* UpgradesScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UpgradesScene.sks; sourceTree = "<group>"; };
 		DB045FB61F09CEBC00EFBBB4 /* Upgrade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upgrade.swift; sourceTree = "<group>"; };
+		DBC2D7141F0AC21B005FC537 /* UpgradesII.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UpgradesII.sks; sourceTree = "<group>"; };
+		DBC2D7161F0AC262005FC537 /* UpgradesSceneTwo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradesSceneTwo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,11 +129,13 @@
 				DB045F701F02F2B900EFBBB4 /* AppDelegate.swift */,
 				DB045F721F02F2B900EFBBB4 /* GameScene.sks */,
 				DB045FB41F09CDE300EFBBB4 /* UpgradesScene.sks */,
+				DBC2D7141F0AC21B005FC537 /* UpgradesII.sks */,
 				DB045F741F02F2B900EFBBB4 /* Actions.sks */,
 				DB045FA81F057F5E00EFBBB4 /* Music */,
 				DB045FA41F031A4000EFBBB4 /* RandomNumberGenerator.swift */,
 				DB045F761F02F2BA00EFBBB4 /* GameScene.swift */,
 				DB045FB61F09CEBC00EFBBB4 /* Upgrade.swift */,
+				DBC2D7161F0AC262005FC537 /* UpgradesSceneTwo.swift */,
 				DB045F781F02F2BA00EFBBB4 /* GameViewController.swift */,
 				DB045F7A1F02F2BA00EFBBB4 /* Main.storyboard */,
 				DB045F7D1F02F2BA00EFBBB4 /* Assets.xcassets */,
@@ -289,6 +295,7 @@
 				DB045F731F02F2B900EFBBB4 /* GameScene.sks in Resources */,
 				DB045F7E1F02F2BA00EFBBB4 /* Assets.xcassets in Resources */,
 				DB045FAC1F057FCB00EFBBB4 /* collect.mp3 in Resources */,
+				DBC2D7151F0AC21B005FC537 /* UpgradesII.sks in Resources */,
 				DB045FB31F05A3C600EFBBB4 /* jumpplayer.mp3 in Resources */,
 				DB045F811F02F2BA00EFBBB4 /* LaunchScreen.storyboard in Resources */,
 				DB045F751F02F2B900EFBBB4 /* Actions.sks in Resources */,
@@ -321,6 +328,7 @@
 				DB045F791F02F2BA00EFBBB4 /* GameViewController.swift in Sources */,
 				DB045F711F02F2B900EFBBB4 /* AppDelegate.swift in Sources */,
 				DB045FA51F031A4000EFBBB4 /* RandomNumberGenerator.swift in Sources */,
+				DBC2D7171F0AC262005FC537 /* UpgradesSceneTwo.swift in Sources */,
 				DB045FB71F09CEBC00EFBBB4 /* Upgrade.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

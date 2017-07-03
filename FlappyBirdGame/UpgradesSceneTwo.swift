@@ -1,8 +1,8 @@
 //
-//  Upgrade.swift
+//  UpgradesSceneTwo.swift
 //  FlappyBirdGame
 //
-//  Created by Pragun Sharma on 02/07/17.
+//  Created by Pragun Sharma on 03/07/17.
 //  Copyright © 2017 Pragun Sharma. All rights reserved.
 //
 
@@ -10,47 +10,28 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-struct powerUpClicked {
-    static var shieldCount = Int()
-    static var magnetCount = Int()
-    
-}
-
-struct PlayerScore {
-    
-    static var numberOfCoinsCollected = Int()
-}
-
-
-public class Cost {
-    
-    var costOfPowerUps = SKLabelNode()
-    var price = Int()
-
-}
-
-class Upgrade: SKScene {
+class UpgradeSceneTwo: SKScene {
     
     let numberofCoinsLabel = SKLabelNode()
     var numberOfCoins = SKSpriteNode()
-    var shieldPwrUp = SKSpriteNode()
-    var costOfPowerUps = SKLabelNode()
-    let costForShield = Cost()
+    var magnetPowerUp = SKSpriteNode()
+    var costForMagnet = Cost()
     var homeButton = SKSpriteNode()
-    
+
     override func didMove(to view: SKView) {
         
-        let swipedLeft = UISwipeGestureRecognizer(target: self, action: #selector(userSwipedLeft))
-        swipedLeft.direction = UISwipeGestureRecognizerDirection.left
-        self.view?.addGestureRecognizer(swipedLeft)
+        let swipedRight = UISwipeGestureRecognizer(target: self, action: #selector(userSwipedRight))
+        swipedRight.direction = UISwipeGestureRecognizerDirection.right
+        self.view?.addGestureRecognizer(swipedRight)
         createScene()
-
+        
+        
     }
     
-    func userSwipedLeft() {
-        
+    func userSwipedRight() {
+    
         //Load the second upgrade scene
-        let upgradeSceneload = GameScene(fileNamed: "UpgradesII")
+        let upgradeSceneload = GameScene(fileNamed: "UpgradesScene")
         self.scene?.view?.presentScene(upgradeSceneload!, transition: SKTransition.crossFade(withDuration: 0.5))
     }
     
@@ -64,19 +45,21 @@ class Upgrade: SKScene {
         background.alpha = 0.5
         self.addChild(background)
         
-        shieldPwrUp = SKSpriteNode(imageNamed: "shieldPowerUp")
-        shieldPwrUp.size = CGSize(width: 256, height: 256)
-        shieldPwrUp.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2 + 100)
-        shieldPwrUp.setScale(0.5)
-        shieldPwrUp.zPosition = 1
-        self.addChild(shieldPwrUp)
-
-        costForShield.price = 30
-        costForShield.costOfPowerUps.fontName = "04b_19"
-        costForShield.costOfPowerUps.text = ("\(costForShield.price)")
-        costForShield.costOfPowerUps.position = CGPoint(x: self.frame.width/2 , y: self.frame.height/2)
-        costForShield.costOfPowerUps.zPosition = 1
-        self.addChild(costForShield.costOfPowerUps)
+        magnetPowerUp = SKSpriteNode(imageNamed: "magnetIcon")
+        magnetPowerUp.size = CGSize(width: 256, height: 256)
+        magnetPowerUp.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2 + 100)
+        magnetPowerUp.setScale(0.5)
+        magnetPowerUp.zPosition = 1
+        self.addChild(magnetPowerUp)
+        
+        
+        costForMagnet.price = 45
+        costForMagnet.costOfPowerUps.fontName = "04b_19"
+        costForMagnet.costOfPowerUps.text = ("\(costForMagnet.price)")
+        costForMagnet.costOfPowerUps.position = CGPoint(x: self.frame.width/2 , y: self.frame.height/2)
+        costForMagnet.costOfPowerUps.zPosition = 1
+        self.addChild(costForMagnet.costOfPowerUps)
+        
         
         //Add an image of coin when the game is not started
         numberOfCoins = SKSpriteNode(imageNamed: "CoinIcon")
@@ -98,23 +81,22 @@ class Upgrade: SKScene {
         numberofCoinsLabel.zPosition = 1
         self.addChild(numberofCoinsLabel)
         
+        
         homeButton = SKSpriteNode(imageNamed: "homeButton")
         homeButton.size = CGSize(width: 256, height: 256)
         homeButton.position = CGPoint(x: self.frame.width/2 - 150, y: self.frame.height/2 + 300)
         homeButton.zPosition = 2
         homeButton.setScale(0.17)
         self.addChild(homeButton)
-        
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //Check if User clicked on the powerup
         for touch in touches {
             let location = touch.location(in: self)
-            if(shieldPwrUp.contains(location)) {
-                if(PlayerScore.numberOfCoinsCollected - costForShield.price >= 0) {
-                    powerUpClicked.shieldCount += 1
+            if(magnetPowerUp.contains(location)) {
+                if(PlayerScore.numberOfCoinsCollected - costForMagnet.price >= 0) {
+                    powerUpClicked.magnetCount += 1
                     updateCoinsLeft()
                 }
                 
@@ -125,18 +107,19 @@ class Upgrade: SKScene {
                 //load gamescene
                 let gameScene = GameScene(fileNamed: "GameScene")
                 self.scene?.view?.presentScene(gameScene!, transition: SKTransition.crossFade(withDuration: 0.5))
-
             }
         }
     }
     
     func updateCoinsLeft() {
         
-        PlayerScore.numberOfCoinsCollected -= costForShield.price
+        PlayerScore.numberOfCoinsCollected -= costForMagnet.price
         numberofCoinsLabel.text = "\(PlayerScore.numberOfCoinsCollected)"
         
         let getCoinsCollected = UserDefaults.standard
         getCoinsCollected.set(PlayerScore.numberOfCoinsCollected, forKey: "numberOfCoinsCollected")
         getCoinsCollected.synchronize()
     }
+    
+    
 }

@@ -17,10 +17,6 @@ struct PhysicsStruct {
     static let Score: UInt32 = 0x1 << 4
 }
 
-struct PlayerScore {
-    
-     static var numberOfCoinsCollected = Int()
-}
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -44,6 +40,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var highScoreLabel = SKLabelNode()
     let scoreLabel = SKLabelNode()
     let numberofCoinsLabel = SKLabelNode()
+    var shieldPwrUp = SKSpriteNode()
+    var numberOfShieldsLabel = SKLabelNode()
+    var magnetPowerUp = SKSpriteNode()
+    var numberOfMagnetsLabel = SKLabelNode()
     
     func restartScene() {
         
@@ -99,6 +99,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ghost.zPosition = 2
         self.addChild(ghost)
         
+        //Create the power ups icons to tell how many the user has purchased
+        shieldPwrUp = SKSpriteNode(imageNamed: "shieldPowerUp")
+        shieldPwrUp.size = CGSize(width: 256, height: 256)
+        shieldPwrUp.position = CGPoint(x: 30, y: 100)
+        shieldPwrUp.setScale(0.17)
+        shieldPwrUp.zPosition = 6
+        self.addChild(shieldPwrUp)
+        
+        numberOfShieldsLabel.text = "\(powerUpClicked.shieldCount)"
+        numberOfShieldsLabel.fontName = "04b_19"
+        numberOfShieldsLabel.fontSize = 20
+        numberOfShieldsLabel.position = CGPoint(x: 30, y: 55)
+        numberOfShieldsLabel.zPosition = 6
+        self.addChild(numberOfShieldsLabel)
+        
+        magnetPowerUp = SKSpriteNode(imageNamed: "magnetIcon")
+        magnetPowerUp.size = CGSize(width: 256, height: 256)
+        magnetPowerUp.position = CGPoint(x: 90, y: 100)
+        magnetPowerUp.setScale(0.17)
+        magnetPowerUp.zPosition = 6
+        self.addChild(magnetPowerUp)
+        
+        numberOfMagnetsLabel.text = "\(powerUpClicked.magnetCount)"
+        numberOfMagnetsLabel.fontName = "04b_19"
+        numberOfMagnetsLabel.fontSize = 20
+        numberOfMagnetsLabel.position = CGPoint(x: 90, y: 55)
+        numberOfMagnetsLabel.zPosition = 6
+        self.addChild(numberOfMagnetsLabel)
+        
         
         
     }
@@ -107,17 +136,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let highScoreDefult = UserDefaults.standard
         let getCoinsCollected = UserDefaults.standard
-        
         if(highScoreDefult.value(forKey: "HighScore") != nil) {
             highScore = highScoreDefult.value(forKey: "HighScore") as! Int
             highScoreLabel.text = "HIGH SCORE: \(self.highScore)"
         }
         
+        
         if(getCoinsCollected.value(forKey: "numberOfCoinsCollected") != nil) {
             PlayerScore.numberOfCoinsCollected = getCoinsCollected.value(forKey: "numberOfCoinsCollected") as! Int
             numberofCoinsLabel.text = "\(PlayerScore.numberOfCoinsCollected)"
         }
-        
+
         do {
             self.audioPlayerCollision = try AVAudioPlayer(contentsOf: URL.init(string: Bundle.main.path(forResource: "Collision", ofType: "mp3")!)!)
             self.audioPlayerCollision.prepareToPlay()
@@ -128,8 +157,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         playSound =  SKAction.playSoundFileNamed("collect", waitForCompletion: false)
         playJumpSound = SKAction.playSoundFileNamed("jumpplayer", waitForCompletion: false)
-        
-        
         self.createScene()
         
     }
