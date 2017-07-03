@@ -17,6 +17,11 @@ struct PhysicsStruct {
     static let Score: UInt32 = 0x1 << 4
 }
 
+struct PlayerScore {
+    
+     static var numberOfCoinsCollected = Int()
+}
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var audioPlayerCollision = AVAudioPlayer()
@@ -32,9 +37,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameStarted = Bool()
     var score = Int()
     var highScore = Int()
-    var numberOfCoinsCollected = Int()
     var died = Bool()
     var restartButton = SKSpriteNode()
+    var upgradeButton = SKSpriteNode()
     var numberOfCoins = SKSpriteNode()
     var highScoreLabel = SKLabelNode()
     let scoreLabel = SKLabelNode()
@@ -95,6 +100,59 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(ghost)
         
         
+        
+    }
+    
+    override func didMove(to view: SKView) {
+        
+        let highScoreDefult = UserDefaults.standard
+        let getCoinsCollected = UserDefaults.standard
+        
+        if(highScoreDefult.value(forKey: "HighScore") != nil) {
+            highScore = highScoreDefult.value(forKey: "HighScore") as! Int
+            highScoreLabel.text = "HIGH SCORE: \(self.highScore)"
+        }
+        
+        if(getCoinsCollected.value(forKey: "numberOfCoinsCollected") != nil) {
+            PlayerScore.numberOfCoinsCollected = getCoinsCollected.value(forKey: "numberOfCoinsCollected") as! Int
+            numberofCoinsLabel.text = "\(PlayerScore.numberOfCoinsCollected)"
+        }
+        
+        do {
+            self.audioPlayerCollision = try AVAudioPlayer(contentsOf: URL.init(string: Bundle.main.path(forResource: "Collision", ofType: "mp3")!)!)
+            self.audioPlayerCollision.prepareToPlay()
+            
+            
+        } catch {
+            print(error)
+        }
+        playSound =  SKAction.playSoundFileNamed("collect", waitForCompletion: false)
+        playJumpSound = SKAction.playSoundFileNamed("jumpplayer", waitForCompletion: false)
+        
+        
+        self.createScene()
+        
+    }
+    
+    
+    func createButtonandLabels() {
+        
+        numberofCoinsLabel.text = "\(PlayerScore.numberOfCoinsCollected)"
+        numberofCoinsLabel.isHidden = false
+        numberOfCoins.isHidden = false
+        audioPlayerCollision.play()
+        
+        //Creating the Restart Button
+        restartButton = SKSpriteNode(imageNamed: "RestartBtn")
+        restartButton.size = CGSize(width: 200, height: 100)
+        restartButton.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
+        restartButton.zPosition = 6
+        restartButton.setScale(0)
+        self.addChild(restartButton)
+        
+        restartButton.run(SKAction.scale(to: 1.0, duration: 0.3))
+        
+        
         //Add an image of coin when the game is not started
         numberOfCoins = SKSpriteNode(imageNamed: "CoinIcon")
         numberOfCoins.position = CGPoint(x: self.frame.width/2 , y: self.frame.height/2 - 150)
@@ -109,60 +167,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         numberOfCoins.setScale(0.8)
         self.addChild(numberOfCoins)
         
-        numberofCoinsLabel.text = "\(numberOfCoinsCollected)"
+        numberofCoinsLabel.text = "\(PlayerScore.numberOfCoinsCollected)"
         numberofCoinsLabel.fontName = "04b_19"
         numberofCoinsLabel.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2 - 200)
         numberofCoinsLabel.zPosition = 6
         self.addChild(numberofCoinsLabel)
-
-    }
-    
-    override func didMove(to view: SKView) {
-        
-        let highScoreDefult = UserDefaults.standard
-        let getCoinsCollected = UserDefaults.standard
-        
-        if(highScoreDefult.value(forKey: "HighScore") != nil) {
-            highScore = highScoreDefult.value(forKey: "HighScore") as! Int
-            highScoreLabel.text = "HIGH SCORE: \(self.highScore)"
-        }
-        
-        if(getCoinsCollected.value(forKey: "numberOfCoinsCollected") != nil) {
-            numberOfCoinsCollected = getCoinsCollected.value(forKey: "numberOfCoinsCollected") as! Int
-            numberofCoinsLabel.text = "\(numberOfCoinsCollected)"
-        }
-        
-        do {
-            self.audioPlayerCollision = try AVAudioPlayer(contentsOf: URL.init(string: Bundle.main.path(forResource: "Collision", ofType: "mp3")!)!)
-            self.audioPlayerCollision.prepareToPlay()
-            
-            
-        } catch {
-            print(error)
-        }
-        playSound =  SKAction.playSoundFileNamed("collect", waitForCompletion: false)
-        playJumpSound = SKAction.playSoundFileNamed("jumpplayer", waitForCompletion: false)
-        
-
-        self.createScene()
-        
-    }
-    
-    
-    func createButtonandLabels() {
-        
-        numberofCoinsLabel.text = "\(numberOfCoinsCollected)"
-        numberofCoinsLabel.isHidden = false
-        numberOfCoins.isHidden = false
-        audioPlayerCollision.play()
-        restartButton = SKSpriteNode(imageNamed: "RestartBtn")
-        restartButton.size = CGSize(width: 200, height: 100)
-        restartButton.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
-        restartButton.zPosition = 6
-        restartButton.setScale(0)
-        self.addChild(restartButton)
-        
-        restartButton.run(SKAction.scale(to: 1.0, duration: 0.3))
         
         highScoreLabel = SKLabelNode(fontNamed: "04b_19")
         highScoreLabel.fontColor = UIColor.black
@@ -170,87 +179,99 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         highScoreLabel.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2 + 90)
         highScoreLabel.zPosition =  6
         self.addChild(highScoreLabel)
+        
+        //Creating the Upgrade Button
+        upgradeButton = SKSpriteNode(imageNamed: "PowerUpButton")
+        upgradeButton.size = CGSize(width: 60, height: 58)
+        upgradeButton.position = CGPoint(x: self.frame.width/2 + 140, y: self.frame.height / 2 + 290)
+        upgradeButton.zPosition = 6
+        self.addChild(upgradeButton)
+        
+        
     }
     
     
     
     func didBegin(_ contact: SKPhysicsContact) {
-        //Test which objects collided
-        let firstBody = contact.bodyA
-        let secondBody = contact.bodyB
         
-        if(firstBody.categoryBitMask == PhysicsStruct.Score && secondBody.categoryBitMask == PhysicsStruct.ghost) {
- 
-            self.score += 1
-            numberOfCoinsCollected += 1
-            scoreLabel.text = "\(score)"
-            firstBody.node?.removeFromParent()
-            self.run(playSound)
+        if(died == false) {
+            //Test which objects collided
+            let firstBody = contact.bodyA
+            let secondBody = contact.bodyB
             
-            if(score > highScore) {
-                highScore = score
+            if(firstBody.categoryBitMask == PhysicsStruct.Score && secondBody.categoryBitMask == PhysicsStruct.ghost) {
+                
+                self.score += 1
+                PlayerScore.numberOfCoinsCollected += 1
+                scoreLabel.text = "\(score)"
+                firstBody.node?.removeFromParent()
+                self.run(playSound)
+                
+                if(score > highScore) {
+                    highScore = score
+                }
+                
+                let highScoreDefult = UserDefaults.standard
+                highScoreDefult.set(highScore, forKey: "HighScore")
+                highScoreDefult.synchronize()
+                
+                let getCoinsCollected = UserDefaults.standard
+                getCoinsCollected.set(PlayerScore.numberOfCoinsCollected, forKey: "numberOfCoinsCollected")
+                getCoinsCollected.synchronize()
             }
-            
-            let highScoreDefult = UserDefaults.standard
-            highScoreDefult.set(highScore, forKey: "HighScore")
-            highScoreDefult.synchronize()
-            
-            let getCoinsCollected = UserDefaults.standard
-            getCoinsCollected.set(numberOfCoinsCollected, forKey: "numberOfCoinsCollected")
-            getCoinsCollected.synchronize()
-        }
-            
-        else if(firstBody.categoryBitMask == PhysicsStruct.ghost && secondBody.categoryBitMask == PhysicsStruct.Score) {
-            
-            self.score += 1
-            numberOfCoinsCollected += 1
-            scoreLabel.text = "\(score)"
-            secondBody.node?.removeFromParent()
-            self.run(playSound)
-            
-            if(score > highScore) {
-                highScore = score
+                
+            else if(firstBody.categoryBitMask == PhysicsStruct.ghost && secondBody.categoryBitMask == PhysicsStruct.Score) {
+                
+                self.score += 1
+                PlayerScore.numberOfCoinsCollected += 1
+                scoreLabel.text = "\(score)"
+                secondBody.node?.removeFromParent()
+                self.run(playSound)
+                
+                if(score > highScore) {
+                    highScore = score
+                }
+                
+                let highScoreDefult = UserDefaults.standard
+                highScoreDefult.set(highScore, forKey: "HighScore")
+                highScoreDefult.synchronize()
+                
+                let getCoinsCollected = UserDefaults.standard
+                getCoinsCollected.set(PlayerScore.numberOfCoinsCollected, forKey: "numberOfCoinsCollected")
+                getCoinsCollected.synchronize()
             }
-            
-            let highScoreDefult = UserDefaults.standard
-            highScoreDefult.set(highScore, forKey: "HighScore")
-            highScoreDefult.synchronize()
-            
-            let getCoinsCollected = UserDefaults.standard
-            getCoinsCollected.set(numberOfCoinsCollected, forKey: "numberOfCoinsCollected")
-            getCoinsCollected.synchronize()
-        }
-            
-        else if(firstBody.categoryBitMask == PhysicsStruct.ghost && secondBody.categoryBitMask == PhysicsStruct.wall ||
-            firstBody.categoryBitMask == PhysicsStruct.wall && secondBody.categoryBitMask == PhysicsStruct.ghost) {
-            
-            enumerateChildNodes(withName: "wallPair", using: ( {
-                (node, error) in
                 
-                node.speed = 0
-                self.removeAllActions()
+            else if(firstBody.categoryBitMask == PhysicsStruct.ghost && secondBody.categoryBitMask == PhysicsStruct.wall ||
+                firstBody.categoryBitMask == PhysicsStruct.wall && secondBody.categoryBitMask == PhysicsStruct.ghost) {
                 
-            }))
-            if(died == false) {
-                died = true
-                createButtonandLabels()
+                enumerateChildNodes(withName: "wallPair", using: ( {
+                    (node, error) in
+                    
+                    node.speed = 0
+                    self.removeAllActions()
+                    
+                }))
+                if(died == false) {
+                    died = true
+                    createButtonandLabels()
+                }
             }
-        }
-            
-        else if(firstBody.categoryBitMask == PhysicsStruct.ghost && secondBody.categoryBitMask == PhysicsStruct.ground ||
-            firstBody.categoryBitMask == PhysicsStruct.ground && secondBody.categoryBitMask == PhysicsStruct.ghost) {
-            
-            
-            enumerateChildNodes(withName: "wallPair", using: ( {
-                (node, error) in
                 
-                node.speed = 0
-                self.removeAllActions()
+            else if(firstBody.categoryBitMask == PhysicsStruct.ghost && secondBody.categoryBitMask == PhysicsStruct.ground ||
+                firstBody.categoryBitMask == PhysicsStruct.ground && secondBody.categoryBitMask == PhysicsStruct.ghost) {
                 
-            }))
-            if(died == false) {
-                died = true
-                createButtonandLabels()
+                
+                enumerateChildNodes(withName: "wallPair", using: ( {
+                    (node, error) in
+                    
+                    node.speed = 0
+                    self.removeAllActions()
+                    
+                }))
+                if(died == false) {
+                    died = true
+                    createButtonandLabels()
+                }
             }
         }
         
@@ -294,6 +315,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
         }
+        
         //If restartButton is clicked
         for touch in touches {
             let location = touch.location(in: self)
@@ -304,6 +326,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
+        //If upgradeButton is clicked
+        for touch in touches {
+            let location = touch.location(in: self)
+            if(died == true) {
+                if(upgradeButton.contains(location)) {
+                    //load the new scene
+                    let upgradeSceneload = GameScene(fileNamed: "UpgradesScene")
+                    self.scene?.view?.presentScene(upgradeSceneload!, transition: SKTransition.crossFade(withDuration: 0.5))
+                }
+            }
+        }
         
     }
     
