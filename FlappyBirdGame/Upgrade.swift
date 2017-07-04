@@ -71,7 +71,7 @@ class Upgrade: SKScene {
         shieldPwrUp.zPosition = 1
         self.addChild(shieldPwrUp)
 
-        costForShield.price = 30
+        costForShield.price = 3
         costForShield.costOfPowerUps.fontName = "04b_19"
         costForShield.costOfPowerUps.text = ("\(costForShield.price)")
         costForShield.costOfPowerUps.position = CGPoint(x: self.frame.width/2 , y: self.frame.height/2)
