@@ -53,7 +53,7 @@ class UpgradeSceneTwo: SKScene {
         self.addChild(magnetPowerUp)
         
         
-        costForMagnet.price = 45
+        costForMagnet.price = 4
         costForMagnet.costOfPowerUps.fontName = "04b_19"
         costForMagnet.costOfPowerUps.text = ("\(costForMagnet.price)")
         costForMagnet.costOfPowerUps.position = CGPoint(x: self.frame.width/2 , y: self.frame.height/2)
@@ -97,6 +97,11 @@ class UpgradeSceneTwo: SKScene {
             if(magnetPowerUp.contains(location)) {
                 if(PlayerScore.numberOfCoinsCollected - costForMagnet.price >= 0) {
                     powerUpClicked.magnetCount += 1
+                    
+                    let magPowerUpsSaved  = UserDefaults.standard
+                    magPowerUpsSaved.set(powerUpClicked.magnetCount, forKey: "NumberOfMagnetsCountBought")
+                    magPowerUpsSaved.synchronize()
+                    
                     updateCoinsLeft()
                 }
                 

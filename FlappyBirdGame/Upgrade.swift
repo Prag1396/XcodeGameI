@@ -135,6 +135,10 @@ class Upgrade: SKScene {
         PlayerScore.numberOfCoinsCollected -= costForShield.price
         numberofCoinsLabel.text = "\(PlayerScore.numberOfCoinsCollected)"
         
+        let shieldPowerUpsSaved  = UserDefaults.standard
+        shieldPowerUpsSaved.set(powerUpClicked.shieldCount, forKey: "NumberOfShieldCountBought")
+        shieldPowerUpsSaved.synchronize()
+        
         let getCoinsCollected = UserDefaults.standard
         getCoinsCollected.set(PlayerScore.numberOfCoinsCollected, forKey: "numberOfCoinsCollected")
         getCoinsCollected.synchronize()
