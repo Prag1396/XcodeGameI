@@ -48,6 +48,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var numberOfMagnetsLabel = SKLabelNode()
     var isDeactivated = Bool()
     var isMagnetic = Bool()
+    var shieldTimer = Timer()
+    var magTimer = Timer()
+    
     func restartScene() {
         
         self.removeAllChildren()
@@ -386,6 +389,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             //Decrement the number of power ups
             if(shieldPwrUp.contains(location)) {
+                
                 if(died == false) {
                     if(powerUpClicked.shieldCount > 0) {
                         powerUpClicked.shieldCount -= 1
@@ -397,14 +401,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         updateDisplayForPowerUps()
                         
                         isDeactivated = true
-                        Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(resetPhysics), userInfo: nil, repeats: false)
+                        shieldTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(resetPhysics), userInfo: nil, repeats: false)
                     }
                 }
             }
             else if(magnetPowerUp.contains(location)) {
+                
                 if(died == false) {
                     if(powerUpClicked.magnetCount > 0 && !isMagnetic) {
-  
+                        
                         powerUpClicked.magnetCount -= 1
                         
                         let magPowerUpsSaved  = UserDefaults.standard
@@ -416,7 +421,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         //Impliment the magnetic effect
                         isMagnetic = true
                         turnOnMagEffect()
-                        Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(turnOfMagEffect), userInfo: nil, repeats: false)
+                        magTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(turnOfMagEffect), userInfo: nil, repeats: false)
                     }
                 }
             }
@@ -436,28 +441,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func turnOnMagEffect() {
-        if(isMagnetic == true) {
-            for child in wallPair.children {
+        
+        for child in wallPair.children {
+            
+            if(child.name == "coinObject") {
+                let slopeToPlayer = (child.position.y - ghost.position.y) / (child.position.x - ghost.position.x)
+                let constant = child.position.y - slopeToPlayer * child.position.x
                 
-                if(child.name == "coinObject") {
-                    let slopeToPlayer = (child.position.y - ghost.position.y) / (child.position.x - ghost.position.x)
-                    let constant = child.position.y - slopeToPlayer * child.position.x
-                    
-                    let finalX: CGFloat = child.position.x < ghost.position.x ? 500.0 : -500.0
-                    let finalY = constant + slopeToPlayer * finalX
-                    
-                    let distancetofind = (child.position.y - finalY) * (child.position.y - finalY) + (child.position.x - finalX) * (child.position.x - finalX)
-                    let speed: CGFloat = 100.0
-                    let timeToCoverDistance = sqrt(distancetofind) / speed
-                    let destination = CGPoint(x: finalX, y: finalY)
-                    let moveAction = SKAction.move(to: destination , duration: TimeInterval(timeToCoverDistance))
-                    let removeAction = SKAction.run( {
-                        () in
-                        child.removeFromParent()
-                    })
-                    child.run(SKAction.sequence([moveAction, removeAction]))
-                    
-                }
+                let finalX: CGFloat = child.position.x < ghost.position.x ? 200.0 : -200.0
+                let finalY = constant + slopeToPlayer * finalX
+                
+                let distancetofind = (child.position.y - finalY) * (child.position.y - finalY) + (child.position.x - finalX) * (child.position.x - finalX)
+                let speed: CGFloat = 100.0
+                let timeToCoverDistance = sqrt(distancetofind) / speed
+                let destination = CGPoint(x: finalX, y: finalY)
+                let moveAction = SKAction.move(to: destination , duration: TimeInterval(timeToCoverDistance))
+                let removeAction = SKAction.run( {
+                    () in
+                    child.removeFromParent()
+                })
+                child.run(SKAction.sequence([moveAction, removeAction]))
             }
         }
     }
@@ -482,6 +485,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         bg.position = CGPoint(x: bg.position.x + bg.size.width * 2, y: bg.position.y)
                     }
                 }))
+            }
+        }
+        
+        if(died == true) {
+            //Cancel the ongoing timers
+            if(shieldTimer.isValid) {
+                shieldTimer.invalidate()
+            } else if(magTimer.isValid) {
+                magTimer.invalidate()
             }
         }
         
