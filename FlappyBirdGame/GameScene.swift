@@ -68,7 +68,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let scoreLabel = SKLabelNode()
     let numberofCoinsLabel = SKLabelNode()
     
-    
     func restartScene() {
         
         self.removeAllChildren()
@@ -182,23 +181,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         numberofCoinsLabel.isHidden = true
         ghost.physicsBody?.affectedByGravity = true
         
-        let spawn = SKAction.run( {
-            () in
-            self.createWalls()
-        })
-        
-        let delay = SKAction.wait(forDuration: 1.5)
-        let SpawnDelay = SKAction.sequence([spawn, delay])
-        let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
-        self.run(spawnDelayForever)
-        
-        let distance = CGFloat(self.frame.width + wallPair.frame.width)
-        let movePipes = SKAction.moveBy(x: -distance - 50, y: 0, duration: TimeInterval(0.008 * distance))
-        let removePipes = SKAction.removeFromParent()
-        moveAndRemove = SKAction.sequence([movePipes ,removePipes])
-        self.run(playJumpSound)
-        ghost.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-        ghost.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 65))
+        if(hasGameStarted.gameStarted == true) {
+            let spawn = SKAction.run( {
+                () in
+                self.createWalls()
+            })
+            
+            let delay = SKAction.wait(forDuration: 1.5)
+            let SpawnDelay = SKAction.sequence([spawn, delay])
+            let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
+            self.run(spawnDelayForever)
+            
+            let distance = CGFloat(self.frame.width + wallPair.frame.width)
+            let movePipes = SKAction.moveBy(x: -distance - 50, y: 0, duration: TimeInterval(0.008 * distance))
+            let removePipes = SKAction.removeFromParent()
+            moveAndRemove = SKAction.sequence([movePipes ,removePipes])
+            self.run(playJumpSound)
+            ghost.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+            ghost.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 65))
+        }
         
         
     }

@@ -12,51 +12,35 @@ import GameplayKit
 
 class StartScene: SKScene {
     
-    var ground = SKSpriteNode()
-    var ghost = SKSpriteNode()
-    var upgradeButton = SKSpriteNode()
     var startLabel = SKLabelNode()
+    
+    let texture = [SKTexture(imageNamed: "Background"), SKTexture(imageNamed: "Ground"), SKTexture(imageNamed: "Ghost"), SKTexture(imageNamed: "shieldPowerUp"), SKTexture(imageNamed: "magnetIcon"), SKTexture(imageNamed: "RestartBtn"), SKTexture(imageNamed: "CoinIcon"), SKTexture(imageNamed: "PowerUpButton"), SKTexture(imageNamed: "Coin"), SKTexture(imageNamed: "Wall")]
     
     override func didMove(to view: SKView) {
      
+        SKTexture.preload(texture, withCompletionHandler: {})
+        
         let background = SKSpriteNode(imageNamed: "Background")
         background.anchorPoint = CGPoint.zero
         background.position = CGPoint(x: 0, y: 0)
-        background.name = "background"
+        background.name = "Background"
         background.size = (self.view?.bounds.size)!
         self.addChild(background)
-        
-        ground = SKSpriteNode(imageNamed: "Ground")
-        ground.setScale(0.5)
-        ground.position = CGPoint(x: self.frame.width / 2, y: 0 + ground.frame.height / 2)
-        ground.zPosition = 3
-        self.addChild(ground)
-        
-        ghost = SKSpriteNode(imageNamed: "Ghost")
-        ghost.size = CGSize(width: 60, height: 70)
-        ghost.position = CGPoint(x: self.frame.width / 2 - ghost.frame.width, y: self.frame.height / 2)
-        ghost.zPosition = 2
-        self.addChild(ghost)
         
         startLabel.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2 + 100)
         startLabel.zPosition = 2
         startLabel.text = "TAP TO START!"
-        startLabel.fontName = "04b_19"
         startLabel.fontSize = 50
         self.addChild(startLabel)
-        
-        
 
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        
+ 
         hasGameStarted.gameStarted = true
         //Load Game Scene
         let gameScene = GameScene(fileNamed: "GameScene")
-        self.scene?.view?.presentScene(gameScene!)
-        
+        self.scene?.view?.presentScene(gameScene!, transition: SKTransition.doorsCloseHorizontal(withDuration: 0.8))
 
     }
     
