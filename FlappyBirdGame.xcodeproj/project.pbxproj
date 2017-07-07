@@ -27,6 +27,8 @@
 		DB045FB71F09CEBC00EFBBB4 /* Upgrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB045FB61F09CEBC00EFBBB4 /* Upgrade.swift */; };
 		DBC2D7151F0AC21B005FC537 /* UpgradesII.sks in Resources */ = {isa = PBXBuildFile; fileRef = DBC2D7141F0AC21B005FC537 /* UpgradesII.sks */; };
 		DBC2D7171F0AC262005FC537 /* UpgradesSceneTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC2D7161F0AC262005FC537 /* UpgradesSceneTwo.swift */; };
+		DBFC05F41F100F9F003040AD /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DBFC05F31F100F9F003040AD /* StartScene.sks */; };
+		DBFC05F61F100FDD003040AD /* StartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFC05F51F100FDD003040AD /* StartScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		DB045FB61F09CEBC00EFBBB4 /* Upgrade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upgrade.swift; sourceTree = "<group>"; };
 		DBC2D7141F0AC21B005FC537 /* UpgradesII.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UpgradesII.sks; sourceTree = "<group>"; };
 		DBC2D7161F0AC262005FC537 /* UpgradesSceneTwo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradesSceneTwo.swift; sourceTree = "<group>"; };
+		DBFC05F31F100F9F003040AD /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
+		DBFC05F51F100FDD003040AD /* StartScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,12 +131,14 @@
 			children = (
 				DB045FA61F044AFF00EFBBB4 /* 04B_19__.TTF */,
 				DB045F701F02F2B900EFBBB4 /* AppDelegate.swift */,
+				DBFC05F31F100F9F003040AD /* StartScene.sks */,
 				DB045F721F02F2B900EFBBB4 /* GameScene.sks */,
 				DB045FB41F09CDE300EFBBB4 /* UpgradesScene.sks */,
 				DBC2D7141F0AC21B005FC537 /* UpgradesII.sks */,
 				DB045F741F02F2B900EFBBB4 /* Actions.sks */,
 				DB045FA81F057F5E00EFBBB4 /* Music */,
 				DB045FA41F031A4000EFBBB4 /* RandomNumberGenerator.swift */,
+				DBFC05F51F100FDD003040AD /* StartScene.swift */,
 				DB045F761F02F2BA00EFBBB4 /* GameScene.swift */,
 				DB045FB61F09CEBC00EFBBB4 /* Upgrade.swift */,
 				DBC2D7161F0AC262005FC537 /* UpgradesSceneTwo.swift */,
@@ -298,6 +304,7 @@
 				DBC2D7151F0AC21B005FC537 /* UpgradesII.sks in Resources */,
 				DB045FB31F05A3C600EFBBB4 /* jumpplayer.mp3 in Resources */,
 				DB045F811F02F2BA00EFBBB4 /* LaunchScreen.storyboard in Resources */,
+				DBFC05F41F100F9F003040AD /* StartScene.sks in Resources */,
 				DB045F751F02F2B900EFBBB4 /* Actions.sks in Resources */,
 				DB045FAD1F057FCB00EFBBB4 /* Collision.mp3 in Resources */,
 			);
@@ -325,6 +332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB045F771F02F2BA00EFBBB4 /* GameScene.swift in Sources */,
+				DBFC05F61F100FDD003040AD /* StartScene.swift in Sources */,
 				DB045F791F02F2BA00EFBBB4 /* GameViewController.swift in Sources */,
 				DB045F711F02F2B900EFBBB4 /* AppDelegate.swift in Sources */,
 				DB045FA51F031A4000EFBBB4 /* RandomNumberGenerator.swift in Sources */,

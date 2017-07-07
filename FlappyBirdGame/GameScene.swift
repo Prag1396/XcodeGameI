@@ -28,13 +28,12 @@ struct PhysicsStruct {
     static let temp_grav: UInt32 = 0x1 << 5
 }
 
-
-
-
-
+struct hasGameStarted {
+    static var gameStarted = Bool()
+}
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-
+    
     private var audioPlayerCollision = AVAudioPlayer()
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
@@ -47,7 +46,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var wallPair = SKNode()
     var scoreNode = SKSpriteNode()
     var moveAndRemove = SKAction()
-    var gameStarted = Bool()
     var score = Int()
     var highScore = Int()
     var died = Bool()
@@ -69,18 +67,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let scoreLabel = SKLabelNode()
     let numberofCoinsLabel = SKLabelNode()
-
-
-   func restartScene() {
- 
+    
+    
+    func restartScene() {
+        
         self.removeAllChildren()
         self.removeAllActions()
         died = false
-        gameStarted = false
+        hasGameStarted.gameStarted = false
         score = 0
         isDeactivated = false
         isMagnetic = false
-        createScene()
+        
+        let startScene = GameScene(fileNamed: "StartScene")
+        self.scene?.view?.presentScene(startScene!, transition: SKTransition.crossFade(withDuration: 0.5))
+
     }
     
     
@@ -104,7 +105,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.fontSize = 60
         scoreLabel.zPosition = 5
         self.addChild(scoreLabel)
-
+        
         ground = SKSpriteNode(imageNamed: "Ground")
         ground.setScale(0.5)
         ground.position = CGPoint(x: self.frame.width / 2, y: 0 + ground.frame.height / 2)
@@ -122,7 +123,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         ground.zPosition = 3
         self.addChild(ground)
- 
+        
         ghost = SKSpriteNode(imageNamed: "Ghost")
         ghost.size = CGSize(width: 60, height: 70)
         ghost.position = CGPoint(x: self.frame.width / 2 - ghost.frame.width, y: self.frame.height / 2)
@@ -145,7 +146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         tempGravity.categoryBitMask = PhysicsStruct.temp_grav
         tempGravity.isEnabled = false
         self.addChild(tempGravity)
-    
+        
         //Create the power ups icons to tell how many the user has purchased
         shieldPwrUp = SKSpriteNode(imageNamed: "shieldPowerUp")
         shieldPwrUp.size = CGSize(width: 256, height: 256)
@@ -154,7 +155,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         shieldPwrUp.zPosition = 6
         self.addChild(shieldPwrUp)
         
-      
+        
         numberOfShieldsLabel.text = "\(powerUpClicked.shieldCount)"
         numberOfShieldsLabel.fontName = "04b_19"
         numberOfShieldsLabel.fontSize = 20
@@ -162,14 +163,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         numberOfShieldsLabel.zPosition = 6
         self.addChild(numberOfShieldsLabel)
         
-    
+        
         magnetPowerUp = SKSpriteNode(imageNamed: "magnetIcon")
         magnetPowerUp.size = CGSize(width: 256, height: 256)
         magnetPowerUp.position = CGPoint(x: 90, y: 100)
         magnetPowerUp.setScale(0.17)
         magnetPowerUp.zPosition = 6
         self.addChild(magnetPowerUp)
-   
+        
         numberOfMagnetsLabel.text = "\(powerUpClicked.magnetCount)"
         numberOfMagnetsLabel.fontName = "04b_19"
         numberOfMagnetsLabel.fontSize = 20
@@ -177,25 +178,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         numberOfMagnetsLabel.zPosition = 6
         self.addChild(numberOfMagnetsLabel)
         
+        numberOfCoins.isHidden = true
+        numberofCoinsLabel.isHidden = true
+        ghost.physicsBody?.affectedByGravity = true
+        
+        let spawn = SKAction.run( {
+            () in
+            self.createWalls()
+        })
+        
+        let delay = SKAction.wait(forDuration: 1.5)
+        let SpawnDelay = SKAction.sequence([spawn, delay])
+        let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
+        self.run(spawnDelayForever)
+        
+        let distance = CGFloat(self.frame.width + wallPair.frame.width)
+        let movePipes = SKAction.moveBy(x: -distance - 50, y: 0, duration: TimeInterval(0.008 * distance))
+        let removePipes = SKAction.removeFromParent()
+        moveAndRemove = SKAction.sequence([movePipes ,removePipes])
+        self.run(playJumpSound)
+        ghost.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        ghost.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 65))
+        
+        
     }
     
     
     
     override func didMove(to view: SKView) {
-
+        
         let highScoreDefult = UserDefaults.standard
         let getCoinsCollected = UserDefaults.standard
         let magPowerUpsSaved = UserDefaults.standard
         let shieldPowerUpsSaved = UserDefaults.standard
         
-  
+        
         if(highScoreDefult.value(forKey: "HighScore") != nil) {
             
             highScore = highScoreDefult.value(forKey: "HighScore") as! Int
             highScoreLabel.text = "HIGH SCORE: \(self.highScore)"
         }
         
-     
+        
         if(getCoinsCollected.value(forKey: "numberOfCoinsCollected") != nil) {
             
             PlayerScore.numberOfCoinsCollected = getCoinsCollected.value(forKey: "numberOfCoinsCollected") as! Int
@@ -210,8 +234,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         
-        
-        
         if(magPowerUpsSaved.value(forKey: "NumberOfMagnetsCountBought") != nil) {
             
             powerUpClicked.magnetCount = magPowerUpsSaved.value(forKey: "NumberOfMagnetsCountBought") as! Int
@@ -219,18 +241,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         
-        
-        
         do {
-            
             self.audioPlayerCollision = try AVAudioPlayer(contentsOf: URL.init(string: Bundle.main.path(forResource: "Collision", ofType: "mp3")!)!)
-            
             self.audioPlayerCollision.prepareToPlay()
             
         } catch {
             
             print(error)
-            
         }
         
         playSound =  SKAction.playSoundFileNamed("collect", waitForCompletion: false)
@@ -238,14 +255,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.createScene()
     }
     
- 
+    
     func createButtonandLabels() {
-   
+        
         numberofCoinsLabel.text = "\(PlayerScore.numberOfCoinsCollected)"
         numberofCoinsLabel.isHidden = false
         numberOfCoins.isHidden = false
         audioPlayerCollision.play()
-    
+        
         //Creating the Restart Button
         restartButton = SKSpriteNode(imageNamed: "RestartBtn")
         restartButton.size = CGSize(width: 200, height: 100)
@@ -268,7 +285,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         numberOfCoins.zPosition = 6
         numberOfCoins.setScale(0.8)
         self.addChild(numberOfCoins)
- 
+        
         numberofCoinsLabel.text = "\(PlayerScore.numberOfCoinsCollected)"
         numberofCoinsLabel.fontName = "04b_19"
         numberofCoinsLabel.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2 - 200)
@@ -283,7 +300,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         highScoreLabel.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2 + 90)
         highScoreLabel.zPosition =  6
         self.addChild(highScoreLabel)
-   
+        
         //Creating the Upgrade Button
         upgradeButton = SKSpriteNode(imageNamed: "PowerUpButton")
         upgradeButton.size = CGSize(width: 60, height: 58)
@@ -292,27 +309,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(upgradeButton)
         
     }
-
+    
     
     func didBegin(_ contact: SKPhysicsContact) {
- 
+        
         if(died == false) {
             
             //Test which objects collided
             let firstBody = contact.bodyA
             let secondBody = contact.bodyB
-     
+            
             if(firstBody.categoryBitMask == PhysicsStruct.Score && secondBody.categoryBitMask == PhysicsStruct.ghost) {
-        
+                
                 self.score += 1
                 PlayerScore.numberOfCoinsCollected += 1
                 scoreLabel.text = "\(score)"
-    
+                
                 if(isMagnetic == true) {
                     
                     turnOnMagEffect()
                 }
-  
+                
                 firstBody.node?.removeFromParent()
                 self.run(playSound)
                 
@@ -320,11 +337,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                     highScore = score
                 }
-
+                
                 let highScoreDefult = UserDefaults.standard
                 highScoreDefult.set(highScore, forKey: "HighScore")
                 highScoreDefult.synchronize()
-   
+                
                 let getCoinsCollected = UserDefaults.standard
                 getCoinsCollected.set(PlayerScore.numberOfCoinsCollected, forKey: "numberOfCoinsCollected")
                 getCoinsCollected.synchronize()
@@ -334,16 +351,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 
             else if(firstBody.categoryBitMask == PhysicsStruct.ghost && secondBody.categoryBitMask == PhysicsStruct.Score) {
-   
+                
                 self.score += 1
                 PlayerScore.numberOfCoinsCollected += 1
                 scoreLabel.text = "\(score)"
-
+                
                 if(isMagnetic == true) {
                     turnOnMagEffect()
                 }
                 
- 
+                
                 secondBody.node?.removeFromParent()
                 self.run(playSound)
                 if(score > highScore) {
@@ -355,13 +372,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let highScoreDefult = UserDefaults.standard
                 highScoreDefult.set(highScore, forKey: "HighScore")
                 highScoreDefult.synchronize()
-  
+                
                 let getCoinsCollected = UserDefaults.standard
                 getCoinsCollected.set(PlayerScore.numberOfCoinsCollected, forKey: "numberOfCoinsCollected")
                 getCoinsCollected.synchronize()
                 
             }
-  
+                
             else if(firstBody.categoryBitMask == PhysicsStruct.ghost && secondBody.categoryBitMask == PhysicsStruct.wall ||
                 
                 firstBody.categoryBitMask == PhysicsStruct.wall && secondBody.categoryBitMask == PhysicsStruct.ghost) {
@@ -405,46 +422,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        if (gameStarted == false) {
+        if(died == false) {
             
-            gameStarted = true
-            numberOfCoins.isHidden = true
-            numberofCoinsLabel.isHidden = true
-            ghost.physicsBody?.affectedByGravity = true
- 
-            let spawn = SKAction.run( {
-                () in
-                self.createWalls()
-            })
-   
-            let delay = SKAction.wait(forDuration: 1.5)
-            let SpawnDelay = SKAction.sequence([spawn, delay])
-            let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
-            self.run(spawnDelayForever)
-
-            let distance = CGFloat(self.frame.width + wallPair.frame.width)
-            let movePipes = SKAction.moveBy(x: -distance - 50, y: 0, duration: TimeInterval(0.008 * distance))
-            let removePipes = SKAction.removeFromParent()
-            moveAndRemove = SKAction.sequence([movePipes ,removePipes])
-            self.run(playJumpSound)
             ghost.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
             ghost.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 65))
+            self.run(playJumpSound)
             
-        } else {
-
-            if(died == false) {
-
-                ghost.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                ghost.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 65))
-                self.run(playJumpSound)
-
-            }
         }
         
-
+        
         //If restartButton is clicked
         for touch in touches {
             
@@ -452,7 +441,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if(died == true) {
                 
                 if(restartButton.contains(location)) {
-                
+                    
                     restartScene()
                     
                 }
@@ -460,8 +449,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
         }
-        
-        
         
         //If upgradeButton is clicked
         for touch in touches {
@@ -481,11 +468,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //Decrement the number of power ups
             if(shieldPwrUp.contains(location)) {
-  
+                
                 if(died == false) {
                     
                     if(powerUpClicked.shieldCount > 0) {
-                    
+                        
                         powerUpClicked.shieldCount -= 1
                         
                         let shieldPowerUpsSaved  = UserDefaults.standard
@@ -502,7 +489,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
                 
             else if(magnetPowerUp.contains(location)) {
-
+                
                 if(died == false) {
                     
                     if(powerUpClicked.magnetCount > 0 && !isMagnetic) {
@@ -531,23 +518,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    
-    
     func turnOfMagEffect() {
         
         print("reached")
         isMagnetic = false
-
+        
     }
-    
-    
     
     func turnOnMagEffect() {
         
         tempGravity.isEnabled = true
     }
-    
-    
     
     func updateDisplayForPowerUps() {
         
@@ -556,12 +537,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    
-    
     override func update(_ currentTime: TimeInterval) {
-
+        
         // Called before each frame is rendered
-        if(gameStarted == true) {
+        if(hasGameStarted.gameStarted == true) {
             
             if(died == false) {
                 
@@ -582,8 +561,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         
-        
-        
         if(died == true) {
             
             //Cancel the ongoing timers
@@ -597,9 +574,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 magTimer.invalidate()
                 
             }
-
+            
         }
-  
+        
         if(isMagnetic && died == false) {
             
             tempGravity.position.x = ghost.position.x
@@ -607,30 +584,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         
-        if(gameStarted && isDeactivated) {
+        if(hasGameStarted.gameStarted && isDeactivated) {
             
             ground.physicsBody = nil
             topWall.physicsBody = nil
             bottomWall.physicsBody = nil
             
         }
-        
-        else if(gameStarted && !isDeactivated) {
-   
+            
+        else if(hasGameStarted.gameStarted && !isDeactivated) {
+            
             ground.physicsBody = SKPhysicsBody(rectangleOf: ground.size)
             ground.physicsBody?.categoryBitMask = (PhysicsStruct.ground)
             ground.physicsBody?.collisionBitMask = (PhysicsStruct.ghost)
             ground.physicsBody?.contactTestBitMask = (PhysicsStruct.ghost)
             ground.physicsBody?.affectedByGravity = false
             ground.physicsBody?.isDynamic = false
-
+            
             topWall.physicsBody = SKPhysicsBody(rectangleOf: topWall.size)
             topWall.physicsBody?.categoryBitMask = PhysicsStruct.wall
             topWall.physicsBody?.collisionBitMask = PhysicsStruct.ghost
             topWall.physicsBody?.contactTestBitMask = PhysicsStruct.ghost
             topWall.physicsBody?.isDynamic = false
             topWall.physicsBody?.affectedByGravity = false
-
+            
             bottomWall.physicsBody = SKPhysicsBody(rectangleOf: bottomWall.size)
             bottomWall.physicsBody?.categoryBitMask = PhysicsStruct.wall
             bottomWall.physicsBody?.collisionBitMask = PhysicsStruct.ghost
@@ -641,20 +618,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
     }
- 
+    
     func createWalls() {
- 
+        
         scoreNode = SKSpriteNode(imageNamed: "Coin")
         scoreNode.size = CGSize(width: 50, height: 50)
         scoreNode.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2)
         scoreNode.physicsBody = SKPhysicsBody(rectangleOf: scoreNode.size)
         
-        if(isMagnetic && gameStarted && died == false) {
+        if(isMagnetic && hasGameStarted.gameStarted && died == false) {
             
             scoreNode.physicsBody?.isDynamic = true
-    
+            
         } else {
-
+            
             scoreNode.physicsBody?.isDynamic = false
             
         }
@@ -665,7 +642,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreNode.physicsBody?.fieldBitMask = PhysicsStruct.temp_grav
         scoreNode.name = "coinObject"
         scoreNode.physicsBody?.affectedByGravity = false
-
+        
         wallPair = SKNode()
         wallPair.name = "wallPair"
         topWall = SKSpriteNode(imageNamed: "Wall")
@@ -682,7 +659,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             topWall.physicsBody?.affectedByGravity = false
             
         }
-  
+        
         bottomWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 - 350)
         
         if(!isDeactivated) {
@@ -695,7 +672,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bottomWall.physicsBody?.affectedByGravity = false
             
         }
-   
+        
         topWall.setScale(0.5)
         bottomWall.setScale(0.5)
         topWall.zRotation = CGFloat(Double.pi)
