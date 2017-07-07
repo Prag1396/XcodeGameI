@@ -14,11 +14,7 @@ class StartScene: SKScene {
     
     var startLabel = SKLabelNode()
     
-    let texture = [SKTexture(imageNamed: "Background"), SKTexture(imageNamed: "Ground"), SKTexture(imageNamed: "Ghost"), SKTexture(imageNamed: "shieldPowerUp"), SKTexture(imageNamed: "magnetIcon"), SKTexture(imageNamed: "RestartBtn"), SKTexture(imageNamed: "CoinIcon"), SKTexture(imageNamed: "PowerUpButton"), SKTexture(imageNamed: "Coin"), SKTexture(imageNamed: "Wall")]
-    
     override func didMove(to view: SKView) {
-     
-        SKTexture.preload(texture, withCompletionHandler: {})
         
         let background = SKSpriteNode(imageNamed: "Background")
         background.anchorPoint = CGPoint.zero
