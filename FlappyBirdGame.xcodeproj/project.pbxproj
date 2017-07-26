@@ -18,13 +18,13 @@
 		DB045F8C1F02F2BA00EFBBB4 /* FlappyBirdGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB045F8B1F02F2BA00EFBBB4 /* FlappyBirdGameTests.swift */; };
 		DB045F971F02F2BA00EFBBB4 /* FlappyBirdGameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB045F961F02F2BA00EFBBB4 /* FlappyBirdGameUITests.swift */; };
 		DB045FA51F031A4000EFBBB4 /* RandomNumberGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB045FA41F031A4000EFBBB4 /* RandomNumberGenerator.swift */; };
-		DB045FA71F044B0000EFBBB4 /* 04B_19__.TTF in Resources */ = {isa = PBXBuildFile; fileRef = DB045FA61F044AFF00EFBBB4 /* 04B_19__.TTF */; };
 		DB045FAC1F057FCB00EFBBB4 /* collect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB045FA91F057FCB00EFBBB4 /* collect.mp3 */; };
 		DB045FAD1F057FCB00EFBBB4 /* Collision.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB045FAA1F057FCB00EFBBB4 /* Collision.mp3 */; };
 		DB045FB11F059A1500EFBBB4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB045FB01F059A1500EFBBB4 /* AVFoundation.framework */; };
 		DB045FB31F05A3C600EFBBB4 /* jumpplayer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB045FB21F05A3C600EFBBB4 /* jumpplayer.mp3 */; };
 		DB045FB51F09CDE300EFBBB4 /* UpgradesScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DB045FB41F09CDE300EFBBB4 /* UpgradesScene.sks */; };
 		DB045FB71F09CEBC00EFBBB4 /* Upgrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB045FB61F09CEBC00EFBBB4 /* Upgrade.swift */; };
+		DB3F22371F2957AF00E26387 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3F22361F2957AF00E26387 /* UIImage+Gif.swift */; };
 		DBC2D7151F0AC21B005FC537 /* UpgradesII.sks in Resources */ = {isa = PBXBuildFile; fileRef = DBC2D7141F0AC21B005FC537 /* UpgradesII.sks */; };
 		DBC2D7171F0AC262005FC537 /* UpgradesSceneTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC2D7161F0AC262005FC537 /* UpgradesSceneTwo.swift */; };
 		DBFC05F41F100F9F003040AD /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DBFC05F31F100F9F003040AD /* StartScene.sks */; };
@@ -66,13 +66,14 @@
 		DB045F961F02F2BA00EFBBB4 /* FlappyBirdGameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlappyBirdGameUITests.swift; sourceTree = "<group>"; };
 		DB045F981F02F2BA00EFBBB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB045FA41F031A4000EFBBB4 /* RandomNumberGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumberGenerator.swift; sourceTree = "<group>"; };
-		DB045FA61F044AFF00EFBBB4 /* 04B_19__.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = 04B_19__.TTF; sourceTree = "<group>"; };
 		DB045FA91F057FCB00EFBBB4 /* collect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = collect.mp3; sourceTree = "<group>"; };
 		DB045FAA1F057FCB00EFBBB4 /* Collision.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Collision.mp3; sourceTree = "<group>"; };
 		DB045FB01F059A1500EFBBB4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		DB045FB21F05A3C600EFBBB4 /* jumpplayer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jumpplayer.mp3; sourceTree = "<group>"; };
 		DB045FB41F09CDE300EFBBB4 /* UpgradesScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UpgradesScene.sks; sourceTree = "<group>"; };
 		DB045FB61F09CEBC00EFBBB4 /* Upgrade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upgrade.swift; sourceTree = "<group>"; };
+		DB3F22361F2957AF00E26387 /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
+		DB3F223B1F295FCE00E26387 /* 04B_19__.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = 04B_19__.TTF; sourceTree = "<group>"; };
 		DBC2D7141F0AC21B005FC537 /* UpgradesII.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UpgradesII.sks; sourceTree = "<group>"; };
 		DBC2D7161F0AC262005FC537 /* UpgradesSceneTwo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradesSceneTwo.swift; sourceTree = "<group>"; };
 		DBFC05F31F100F9F003040AD /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
@@ -129,24 +130,18 @@
 		DB045F6F1F02F2B900EFBBB4 /* FlappyBirdGame */ = {
 			isa = PBXGroup;
 			children = (
-				DB045FA61F044AFF00EFBBB4 /* 04B_19__.TTF */,
-				DB045F701F02F2B900EFBBB4 /* AppDelegate.swift */,
-				DBFC05F31F100F9F003040AD /* StartScene.sks */,
-				DB045F721F02F2B900EFBBB4 /* GameScene.sks */,
-				DB045FB41F09CDE300EFBBB4 /* UpgradesScene.sks */,
-				DBC2D7141F0AC21B005FC537 /* UpgradesII.sks */,
-				DB045F741F02F2B900EFBBB4 /* Actions.sks */,
+				DB3F22381F29589F00E26387 /* Resources */,
+				DB3F22351F29571800E26387 /* Scenes */,
+				DB3F22341F2956FB00E26387 /* SKS */,
 				DB045FA81F057F5E00EFBBB4 /* Music */,
 				DB045FA41F031A4000EFBBB4 /* RandomNumberGenerator.swift */,
-				DBFC05F51F100FDD003040AD /* StartScene.swift */,
-				DB045F761F02F2BA00EFBBB4 /* GameScene.swift */,
-				DB045FB61F09CEBC00EFBBB4 /* Upgrade.swift */,
-				DBC2D7161F0AC262005FC537 /* UpgradesSceneTwo.swift */,
 				DB045F781F02F2BA00EFBBB4 /* GameViewController.swift */,
+				DB045F701F02F2B900EFBBB4 /* AppDelegate.swift */,
 				DB045F7A1F02F2BA00EFBBB4 /* Main.storyboard */,
 				DB045F7D1F02F2BA00EFBBB4 /* Assets.xcassets */,
 				DB045F7F1F02F2BA00EFBBB4 /* LaunchScreen.storyboard */,
 				DB045F821F02F2BA00EFBBB4 /* Info.plist */,
+				DB3F22361F2957AF00E26387 /* UIImage+Gif.swift */,
 			);
 			path = FlappyBirdGame;
 			sourceTree = "<group>";
@@ -185,6 +180,37 @@
 				DB045FB01F059A1500EFBBB4 /* AVFoundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DB3F22341F2956FB00E26387 /* SKS */ = {
+			isa = PBXGroup;
+			children = (
+				DBFC05F31F100F9F003040AD /* StartScene.sks */,
+				DB045F721F02F2B900EFBBB4 /* GameScene.sks */,
+				DB045FB41F09CDE300EFBBB4 /* UpgradesScene.sks */,
+				DBC2D7141F0AC21B005FC537 /* UpgradesII.sks */,
+				DB045F741F02F2B900EFBBB4 /* Actions.sks */,
+			);
+			name = SKS;
+			sourceTree = "<group>";
+		};
+		DB3F22351F29571800E26387 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				DBFC05F51F100FDD003040AD /* StartScene.swift */,
+				DB045F761F02F2BA00EFBBB4 /* GameScene.swift */,
+				DB045FB61F09CEBC00EFBBB4 /* Upgrade.swift */,
+				DBC2D7161F0AC262005FC537 /* UpgradesSceneTwo.swift */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		DB3F22381F29589F00E26387 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DB3F223B1F295FCE00E26387 /* 04B_19__.TTF */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,7 +323,6 @@
 			files = (
 				DB045F7C1F02F2BA00EFBBB4 /* Main.storyboard in Resources */,
 				DB045FB51F09CDE300EFBBB4 /* UpgradesScene.sks in Resources */,
-				DB045FA71F044B0000EFBBB4 /* 04B_19__.TTF in Resources */,
 				DB045F731F02F2B900EFBBB4 /* GameScene.sks in Resources */,
 				DB045F7E1F02F2BA00EFBBB4 /* Assets.xcassets in Resources */,
 				DB045FAC1F057FCB00EFBBB4 /* collect.mp3 in Resources */,
@@ -337,6 +362,7 @@
 				DB045F711F02F2B900EFBBB4 /* AppDelegate.swift in Sources */,
 				DB045FA51F031A4000EFBBB4 /* RandomNumberGenerator.swift in Sources */,
 				DBC2D7171F0AC262005FC537 /* UpgradesSceneTwo.swift in Sources */,
+				DB3F22371F2957AF00E26387 /* UIImage+Gif.swift in Sources */,
 				DB045FB71F09CEBC00EFBBB4 /* Upgrade.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

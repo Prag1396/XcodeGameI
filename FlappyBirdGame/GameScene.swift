@@ -65,7 +65,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var magTimer = Timer()
     var tempGravity = SKFieldNode()
     
-    let texture = [SKTexture(imageNamed: "Background"), SKTexture(imageNamed: "Ground"), SKTexture(imageNamed: "Ghost"), SKTexture(imageNamed: "shieldPowerUp"), SKTexture(imageNamed: "magnetIcon"), SKTexture(imageNamed: "RestartBtn"), SKTexture(imageNamed: "CoinIcon"), SKTexture(imageNamed: "PowerUpButton"), SKTexture(imageNamed: "Coin"), SKTexture(imageNamed: "Wall")]
+    let texture = [SKTexture(imageNamed: "Background"), SKTexture(imageNamed: "Ground"), SKTexture(imageNamed: "Ghost"), SKTexture(imageNamed: "shieldPowerUp"), SKTexture(imageNamed: "magnetIcon"), SKTexture(imageNamed: "RestartBtn"), SKTexture(imageNamed: "CoinIcon"), SKTexture(imageNamed: "PowerUpButton"), SKTexture(imageNamed: "Coin"), SKTexture(imageNamed: "Wall"), SKTexture(imageNamed: "Coin_spin-1"), SKTexture(imageNamed: "Coin_spin-2"), SKTexture(imageNamed: "Coin_spin-3")]
     
     let scoreLabel = SKLabelNode()
     let numberofCoinsLabel = SKLabelNode()
@@ -212,6 +212,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         SKTexture.preload(texture, withCompletionHandler: {})
         
+        print(UIFont.familyNames)
+        
         let highScoreDefult = UserDefaults.standard
         let getCoinsCollected = UserDefaults.standard
         let magPowerUpsSaved = UserDefaults.standard
@@ -277,8 +279,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(restartButton)
         restartButton.run(SKAction.scale(to: 1.0, duration: 0.3))
         
-        //Add an image of coin when the game is not started
-        numberOfCoins = SKSpriteNode(imageNamed: "CoinIcon")
+        //Adding GIF animation to Coin
+        let frame1 = SKTexture.init(imageNamed: "Coin_spin-1")
+        let frame2 = SKTexture.init(imageNamed: "Coin_spin-2")
+        let frame3 = SKTexture.init(imageNamed: "Coin_spin-3")
+
+        let frames: [SKTexture] = [frame1, frame2, frame3]
+        
+        numberOfCoins = SKSpriteNode(imageNamed: "Coin_spin-1")
         numberOfCoins.position = CGPoint(x: self.frame.width/2 , y: self.frame.height/2 - 150)
         numberOfCoins.size = CGSize(width: 50, height: 50)
         numberOfCoins.physicsBody = SKPhysicsBody(rectangleOf: numberOfCoins.size)
@@ -289,6 +297,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         numberOfCoins.physicsBody?.contactTestBitMask = 0
         numberOfCoins.zPosition = 6
         numberOfCoins.setScale(0.8)
+        
+        let animation = SKAction.animate(with: frames, timePerFrame: 0.2, resize: false, restore: false)
+        numberOfCoins.run(SKAction.repeatForever(animation))
+        
         self.addChild(numberOfCoins)
         
         numberofCoinsLabel.text = "\(PlayerScore.numberOfCoinsCollected)"
