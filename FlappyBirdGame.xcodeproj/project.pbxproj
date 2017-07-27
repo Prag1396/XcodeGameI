@@ -25,6 +25,7 @@
 		DB045FB51F09CDE300EFBBB4 /* UpgradesScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DB045FB41F09CDE300EFBBB4 /* UpgradesScene.sks */; };
 		DB045FB71F09CEBC00EFBBB4 /* Upgrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB045FB61F09CEBC00EFBBB4 /* Upgrade.swift */; };
 		DB3F22371F2957AF00E26387 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3F22361F2957AF00E26387 /* UIImage+Gif.swift */; };
+		DB3F223C1F29615700E26387 /* 04B_19__.TTF in Resources */ = {isa = PBXBuildFile; fileRef = DB3F223B1F295FCE00E26387 /* 04B_19__.TTF */; };
 		DBC2D7151F0AC21B005FC537 /* UpgradesII.sks in Resources */ = {isa = PBXBuildFile; fileRef = DBC2D7141F0AC21B005FC537 /* UpgradesII.sks */; };
 		DBC2D7171F0AC262005FC537 /* UpgradesSceneTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC2D7161F0AC262005FC537 /* UpgradesSceneTwo.swift */; };
 		DBFC05F41F100F9F003040AD /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DBFC05F31F100F9F003040AD /* StartScene.sks */; };
@@ -321,6 +322,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB3F223C1F29615700E26387 /* 04B_19__.TTF in Resources */,
 				DB045F7C1F02F2BA00EFBBB4 /* Main.storyboard in Resources */,
 				DB045FB51F09CDE300EFBBB4 /* UpgradesScene.sks in Resources */,
 				DB045F731F02F2B900EFBBB4 /* GameScene.sks in Resources */,

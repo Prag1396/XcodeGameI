@@ -212,8 +212,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         SKTexture.preload(texture, withCompletionHandler: {})
         
-        print(UIFont.familyNames)
-        
         let highScoreDefult = UserDefaults.standard
         let getCoinsCollected = UserDefaults.standard
         let magPowerUpsSaved = UserDefaults.standard
@@ -287,8 +285,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let frames: [SKTexture] = [frame1, frame2, frame3]
         
         numberOfCoins = SKSpriteNode(imageNamed: "Coin_spin-1")
-        numberOfCoins.position = CGPoint(x: self.frame.width/2 , y: self.frame.height/2 - 150)
-        numberOfCoins.size = CGSize(width: 50, height: 50)
+        numberOfCoins.position = CGPoint(x: self.frame.width/2 - 150, y: self.frame.height / 2 + 292.5)
+        numberOfCoins.size = CGSize(width: 60, height: 58)
         numberOfCoins.physicsBody = SKPhysicsBody(rectangleOf: numberOfCoins.size)
         numberOfCoins.physicsBody?.affectedByGravity = false
         numberOfCoins.physicsBody?.isDynamic = false
@@ -296,16 +294,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         numberOfCoins.physicsBody?.collisionBitMask = 0
         numberOfCoins.physicsBody?.contactTestBitMask = 0
         numberOfCoins.zPosition = 6
-        numberOfCoins.setScale(0.8)
         
-        let animation = SKAction.animate(with: frames, timePerFrame: 0.2, resize: false, restore: false)
+        let animation = SKAction.animate(with: frames, timePerFrame: 0.15, resize: false, restore: false)
         numberOfCoins.run(SKAction.repeatForever(animation))
         
         self.addChild(numberOfCoins)
         
         numberofCoinsLabel.text = "\(PlayerScore.numberOfCoinsCollected)"
         numberofCoinsLabel.fontName = "04b_19"
-        numberofCoinsLabel.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2 - 200)
+        numberofCoinsLabel.position = CGPoint(x: numberOfCoins.position.x + 40, y: numberOfCoins.position.y - 20)
         numberofCoinsLabel.zPosition = 6
         self.addChild(numberofCoinsLabel)
         
